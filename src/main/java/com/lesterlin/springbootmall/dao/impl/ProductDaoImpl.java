@@ -32,7 +32,7 @@ public class ProductDaoImpl implements ProductDao {
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
-        if (productList.size() > 0) {
+        if (!productList.isEmpty()) {
             return productList.get(0);
         } else {
             return null;
@@ -72,8 +72,8 @@ public class ProductDaoImpl implements ProductDao {
                 "price=:price,stock=:stock,description=:description,last_modified_date=:lastModifiedDate " +
                 "where product_id=:productId";
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("productId",productId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
 
         map.put("productName", productRequest.getProductName());
         map.put("category", productRequest.getCategory().name());
@@ -82,8 +82,18 @@ public class ProductDaoImpl implements ProductDao {
         map.put("stock", productRequest.getStock());
         map.put("description", productRequest.getDescription());
 
-        map.put("lastModifiedDate",new Date());
+        map.put("lastModifiedDate", new Date());
 
-        namedParameterJdbcTemplate.update(sql,map);
+        namedParameterJdbcTemplate.update(sql, map);
+    }
+
+    @Override
+    public void deleteProductById(Integer productId) {
+        String sql = "delete from product where product_id=:productId";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+
+        namedParameterJdbcTemplate.update(sql, map);
     }
 }

@@ -3,7 +3,11 @@ package com.lesterlin.springbootmall.dao;
 import com.lesterlin.springbootmall.dto.ProductRequest;
 import com.lesterlin.springbootmall.model.Product;
 
+import java.util.List;
+
 public interface ProductDao {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 

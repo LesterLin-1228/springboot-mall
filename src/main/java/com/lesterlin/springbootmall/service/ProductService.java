@@ -1,6 +1,6 @@
 package com.lesterlin.springbootmall.service;
 
-import com.lesterlin.springbootmall.constant.ProductCategory;
+import com.lesterlin.springbootmall.dto.ProductQueryParams;
 import com.lesterlin.springbootmall.dto.ProductRequest;
 import com.lesterlin.springbootmall.model.Product;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getProducts(ProductCategory category, String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);
 

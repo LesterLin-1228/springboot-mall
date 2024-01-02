@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductService {
 
+    Integer countProducts(ProductQueryParams productQueryParams);
+
     List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);
@@ -17,4 +19,5 @@ public interface ProductService {
     void updateProduct(Integer productId, ProductRequest productRequest);
 
     void deleteProductById(Integer productId);
+
 }

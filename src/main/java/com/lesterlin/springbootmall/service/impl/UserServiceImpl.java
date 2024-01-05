@@ -1,6 +1,7 @@
 package com.lesterlin.springbootmall.service.impl;
 
 import com.lesterlin.springbootmall.dao.UserDao;
+import com.lesterlin.springbootmall.dto.UserLoginRequest;
 import com.lesterlin.springbootmall.dto.UserRegisterRequest;
 import com.lesterlin.springbootmall.model.User;
 import com.lesterlin.springbootmall.service.UserService;
@@ -36,5 +37,23 @@ public class UserServiceImpl implements UserService {
 
         // 創建帳號
         return userDao.createUser(userRegisterRequest);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        // 根據前端傳過來的值來與資料庫作比對是否存在
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null) {
+            log.warn("該 email {} 尚未註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (user.getPassword().equals(userLoginRequest.getPassword())) {
+            return user;
+        } else {
+            log.warn("email {} 密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

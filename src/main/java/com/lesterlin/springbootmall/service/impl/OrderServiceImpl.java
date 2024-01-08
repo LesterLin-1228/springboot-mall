@@ -4,6 +4,7 @@ import com.lesterlin.springbootmall.dao.OrderDao;
 import com.lesterlin.springbootmall.dao.ProductDao;
 import com.lesterlin.springbootmall.dto.BuyItem;
 import com.lesterlin.springbootmall.dto.CreateOrderRequest;
+import com.lesterlin.springbootmall.model.Order;
 import com.lesterlin.springbootmall.model.OrderItem;
 import com.lesterlin.springbootmall.model.Product;
 import com.lesterlin.springbootmall.service.OrderService;
@@ -52,5 +53,16 @@ public class OrderServiceImpl implements OrderService {
 
 
         return orderId;
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
     }
 }

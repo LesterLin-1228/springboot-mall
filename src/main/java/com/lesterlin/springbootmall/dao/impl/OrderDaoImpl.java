@@ -105,20 +105,20 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getOrders(OrderQueryParams orderQueryParams) {
         String sql = "SELECT order_id, user_id, total_amount, created_Date, last_modified_date FROM `order` WHERE 1=1";
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         // 查詢條件
-        sql = addFiltering(sql,map,orderQueryParams);
+        sql = addFiltering(sql, map, orderQueryParams);
 
         // 排序
         sql = sql + " ORDER BY created_date DESC";
 
         // 分頁
         sql = sql + " LIMIT :limit OFFSET :offset";
-        map.put("limit",orderQueryParams.getLimit());
-        map.put("offset",orderQueryParams.getOffset());
+        map.put("limit", orderQueryParams.getLimit());
+        map.put("offset", orderQueryParams.getOffset());
 
-        List<Order> orderList = namedParameterJdbcTemplate.query(sql,map,new OrderRowMapper());
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, new OrderRowMapper());
 
         return orderList;
     }
@@ -132,7 +132,7 @@ public class OrderDaoImpl implements OrderDao {
         // 查詢條件
         sql = addFiltering(sql, map, orderQueryParams);
 
-        Integer total = namedParameterJdbcTemplate.queryForObject(sql,map, Integer.class);
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
 
         return total;
     }

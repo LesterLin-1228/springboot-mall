@@ -102,6 +102,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        User user = userDao.getUserById(orderQueryParams.getUserId());
+
+        if (user==null){
+            log.warn("userId : {} is not exist",orderQueryParams.getUserId());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
         List<Order> orderList = orderDao.getOrders(orderQueryParams);
 
         for (Order order : orderList){
